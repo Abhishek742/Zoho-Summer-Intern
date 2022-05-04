@@ -1,0 +1,23 @@
+OOPS:
+    ->Object Oriented Programming is a paradigm in which everything is represented as real world entities.It is generally implemented using classes and objects.
+    ->An object is an instantiation of a class. In terms of variables, a class would be the type, and an object would be the variable.
+    ->The properties and functions of entities that are usually similar are generally represented using the same class.For Example we can have a class named person. We can have mutliple objects(persons).
+
+Access Specifiers:
+    -> Public 
+    -> Protected
+    -> Private
+
+Defining member function outside the class:
+    -> Can be done with the help of :: keyword.
+    -> Inside the class only the declaration of the function is done
+
+Friend Function:
+    -> Friends are functions or classes declared with the friend keyword.
+    -> A non-member function can access the private and protected members of a class if it is declared a friend of that class. That is done by including a declaration of this external function within the class, and preceding it with the keyword friend.
+
+Friend classes:
+    -> Similar to friend functions, a friend class is a class whose members have access to the private or protected members of another class.
+
+Encapsulation:
+    ->Encapsulation is one of the key features of object-oriented programming. It involves the bundling of data members and functions inside a single class.
