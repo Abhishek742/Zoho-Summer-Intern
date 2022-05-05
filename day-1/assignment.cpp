@@ -18,14 +18,24 @@ class Vehicle{
     bool operator >(Vehicle &v){
         return this->price > v.price;
     }
-    friend ostream& operator <<(ostream &os,Vehicle &v){
+    // friend ostream& operator <<(ostream &os,Vehicle &v){
+    //     os<<"\nVehicle Details\n";
+    //     os<<"Vehicle Type - "<<v.vehicleType<<"\n";
+    //     os<<"Brand -  "<<v.brand<<"\n";
+    //     os<<"Model - "<<v.model<<"\n";
+    //     os<<"Color - "<<v.color<<"\n";
+    //     os<<"Mileage - "<<v.mileage<<"\n";
+    //     os<<"Price - "<<v.price<<"\n";
+    //     return os;
+    // }
+    ostream& operator <<(ostream &os){
         os<<"\nVehicle Details\n";
-        os<<"Vehicle Type - "<<v.vehicleType<<"\n";
-        os<<"Brand -  "<<v.brand<<"\n";
-        os<<"Model - "<<v.model<<"\n";
-        os<<"Color - "<<v.color<<"\n";
-        os<<"Mileage - "<<v.mileage<<"\n";
-        os<<"Price - "<<v.price<<"\n";
+        os<<"Vehicle Type - "<<this->vehicleType<<"\n";
+        os<<"Brand -  "<<this->brand<<"\n";
+        os<<"Model - "<<this->model<<"\n";
+        os<<"Color - "<<this->color<<"\n";
+        os<<"Mileage - "<<this->mileage<<"\n";
+        os<<"Price - "<<this->price<<"\n";
         return os;
     }
     //abstract method
@@ -66,6 +76,6 @@ int main(){
     //> operator overloading. 
     cout<<"Price of bike greater than car - "<<( bike > car)<<endl;
     cout<<"Price of car greater than bike - "<<( car > bike)<<endl;
-    cout << bike;
-    cout << car;
+    bike << cout;
+    car << cout;
 }
