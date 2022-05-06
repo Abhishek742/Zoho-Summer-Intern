@@ -62,6 +62,7 @@ int main(){
         delete[] visited[i];
         delete[] arr[i];
     }
+    delete[] groups;
     delete[] visited;
     delete[] arr;
 }
