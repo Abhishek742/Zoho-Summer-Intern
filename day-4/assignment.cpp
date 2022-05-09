@@ -7,12 +7,9 @@ public:
 //default constructor
 Rectangle(){
     left.reset(new int(0));
-    // left = make_unique<int> (new int(0));
-
     top.reset(new int(0));
     height.reset(new int(0));
     width.reset(new int(0));
-    //area = new int(0);
 }
 //parameterized constructor with height and width as parameters
 Rectangle(int h,int w){
@@ -20,8 +17,6 @@ Rectangle(int h,int w){
     top.reset(new int(0));
     height.reset(new int(w));
     width.reset(new int(h));
-    // area = new int(0);
-    //area = 
 }
 //parameterized constructor with all paramters
 Rectangle(int t,int l,int h,int w){
@@ -29,14 +24,12 @@ Rectangle(int t,int l,int h,int w){
     top.reset(new int(t));
     height.reset(new int(w));
     width.reset(new int(h));
-    //area = new int(0);
 }
 Rectangle(float t,float l,float h,float w){
     left.reset(new int(round(l)));
-    top.reset(new int(round(t)));
+    top.reset(new int(round(t)));   
     height.reset(new int(round(h)));
     width.reset(new int(round(w)));
-   // area = new int(round(0));
 }
 Rectangle(Rectangle &obj){
     left.reset(new int(*obj.left));
