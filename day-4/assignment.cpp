@@ -20,6 +20,7 @@ Rectangle(int h,int w){
 }
 //parameterized constructor with all paramters
 Rectangle(int t,int l,int h,int w){
+    // left = make_unique<int> (new int(0));
     left.reset(new int(l));
     top.reset(new int(t));
     height.reset(new int(w));
