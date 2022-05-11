@@ -2,19 +2,6 @@
 using namespace std;
 
 int main(){
-    // try{
-    //     try{
-    //         throw out_of_range("out of range Error\n");
-    //     }catch(runtime_error &e){
-    //         cout<<e.what();
-    //         throw ;
-    //     }
-    // }catch(const char* s){
-    //     cout<<s<<"sksj";
-    // }catch(...){
-    //     cout<<""
-    // }
-    
     //outer try block
     try{
         //inner try block
