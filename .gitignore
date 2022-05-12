@@ -1,2 +1,4 @@
 *.exe
 .vscode
+notes.cpp
+temp.cpp
