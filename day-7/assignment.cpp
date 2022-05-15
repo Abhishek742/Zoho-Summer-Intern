@@ -41,7 +41,7 @@ public:
         if (this->turnedOn)
             return;
         this->turnedOn = true;
-        cout << this->name << (this->name == "door" ? "Door Opened" : " turned ON\n ");
+        cout << this->name << (this->name == "Door" ? " Opened\n" : " turned ON\n");
     }
     void turnOff()
     {
@@ -49,7 +49,7 @@ public:
             return;
 
         this->turnedOn = false;
-        cout << this->name << " turned OFF\n";
+        cout << this->name << (this->name == "Door" ? " Closed\n" : " turned OFF\n");
     }
 };
 
@@ -57,38 +57,13 @@ Device fan("Fan"), light("Light"), door("Door"), alarm("Alarm");
 
 class Sensor
 {
+    friend class ClientApplication;
     float value, battery, limit;
     string opr, devicename, func, name;
     bool status;
 
 public:
     Sensor(string name, float value, float battery) : name(name), value(value), battery(battery){};
-    void onChange()
-    {
-        if (checkCondition())
-            action();
-        else
-            inverseAction();
-    }
-    void changeValue(char ch)
-    {
-        if (ch == 'i')
-            this->value++;
-        else if (ch == 'd')
-            this->value--;
-        else
-        {
-            cout << "Enter valid command for sensing - i or d\n";
-            return;
-        }
-        cout << endl
-             << this->value << endl;
-        if (this->status)
-            onChange();
-        else
-            cout << this->name << " Offline - Low Battery\n";
-        batteryChange();
-    }
     void setConditionAction(vector<string> &cond, vector<string> &act)
     {
         this->status = true;
@@ -97,100 +72,63 @@ public:
         this->devicename = act[1];
         this->func = act[2];
     }
-    bool checkCondition()
+    void changeValue(char ch, bool (*checkCondition)(Sensor *), void (*action)(Sensor *), void (*inverseAction)(Sensor *), void (*onBatteryChange)(Sensor *))
     {
-        if (this->opr == ">")
-            return (value > limit);
-        if (this->opr == ">=")
-            return (value >= limit);
-        if (this->opr == "==")
-            return (value == limit);
-        if (this->opr == "<")
-            return (value < limit);
-        if (this->opr == "<=")
-            return (value <= limit);
-        return false;
-    }
-    void action()
-    {
-        if (devicename == "fan")
+        // check if the sensor is online
+        if (this->status)
         {
-            if (func == "turnon")
-                fan.turnOn();
+            // increase / decrease value of sensor
+            if (ch == 'i')
+                this->value++;
             else
-                fan.turnOff();
-        }
-        else if (devicename == "light")
-        {
-            if (func == "turnon")
-                light.turnOn();
+                this->value--;
+            cout << "\nSensor Reading - " << this->value << "\nBattery percentage - " << this->battery - 1 << endl
+                 << endl;
+            // check if the condition for the event to occur is met
+            if (checkCondition(this))
+                action(this);
             else
-                light.turnOff();
+                inverseAction(this);
+
+            // invoke the battery change event
+            onBatteryChange(this);
         }
-        else if (devicename == "door")
-        {
-            if (func == "open")
-                door.turnOn();
-            else
-                door.turnOff();
-        }
-        else if (devicename == "alarm")
-        {
-            if (func == "turnon")
-                alarm.turnOn();
-            else
-                alarm.turnOff();
-        }
-    }
-    void inverseAction()
-    {
-        if (devicename == "fan")
-        {
-            if (func == "turnon")
-                fan.turnOff();
-            else
-                fan.turnOn();
-        }
-        else if (devicename == "light")
-        {
-            if (func == "turnon")
-                light.turnOff();
-            else
-                light.turnOn();
-        }
-        else if (devicename == "door")
-        {
-            if (func == "open")
-                door.turnOff();
-            else
-                door.turnOn();
-        }
-        else if (devicename == "alarm")
-        {
-            if (func == "turnon")
-                alarm.turnOff();
-            else
-                alarm.turnOn();
-        }
-    }
-    void batteryChange()
-    {
-        this->battery--;
-        if (this->battery > 0)
-            return;
-        this->status = false;
+        else
+            cout << endl
+                 << this->name << "Sensor Disconnected - Low Battery\n";
     }
 };
-Sensor temperature("Temperature ", 20.56f, 3.00), motion("Motion ", 20.34f, 3.00), waterLevel("Water Level ", 18.90f, 3.00), gas("Gas ", 20.89f, 3.00);
+
+// Sensor obj(obj_name,initial_value,battery_percentage)
+Sensor temperature("Temperature ", 20.56f, 60.00), motion("Motion ", 20.34f, 3.00), waterLevel("Water Level ", 18.90f, 30.00), gas("Gas ", 20.89f, 30.00);
 
 class ClientApplication
 {
 public:
     void onConnect()
     {
-        cout << "List Of Available Devices and Sensors \nSensors - Temperature,Motion,WaterLevel,Gas\nDevices - SmartFan,SmartLight,DoorControl\n";
-        cout << "\nEnter Automation commands in the given syntax\n";
-        cout << "If: <sensor_name> <comparision> <sensor_value>\nThen: <device><function>\n\n";
+        if (temperature.status)
+        {
+            cout << "\nTemperature Sensor Connected \n";
+        }
+        if (motion.status)
+        {
+            cout << "\nMotion Sensor Connected \n";
+        }
+        if (waterLevel.status)
+        {
+            cout << "\nWater Level Sensor Connected \n";
+        }
+        if (gas.status)
+        {
+            cout << "\nGas Sensor Connected \n";
+        }
+    }
+    void automateCommands()
+    {
+        cout << "List Of Available Devices and Sensors \n\nSensors - Temperature,Motion,WaterLevel,Gas\nDevices - SmartFan,SmartLight,DoorControl\n";
+        cout << "\nEnter Automation commands in the given syntax\n\n";
+        cout << "If: <sensor_name> <comparision> <sensor_value>\nThen: <device> <function>\n\n";
         int i = 0;
         while (i < 4)
         {
@@ -201,31 +139,36 @@ public:
             split(condition, cond);
             split(action, act);
             truncateFloat(cond[3]);
+            if (cond[0] != "if:" || act[0] != "then:")
+            {
+                cout << "Enter valid command in the given syntax!!\n";
+                continue;
+            }
             if (cond[1] == "temperature")
             {
                 temperature.setConditionAction(cond, act);
-                cout << "Temperature Sensor ONLINE \n";
             }
             else if (cond[1] == "motion")
             {
                 motion.setConditionAction(cond, act);
-                cout << "Motion Sensor ONLINE \n";
             }
 
             else if (cond[1] == "waterlevel")
             {
                 waterLevel.setConditionAction(cond, act);
-                cout << "Water Level Sensor ONLINE \n";
             }
             else if (cond[1] == "gas")
             {
                 gas.setConditionAction(cond, act);
-                cout << "Gas Sensor ONLINE \n";
             }
             else
+            {
                 cout << "Enter a sensor from the ones mentioned above\n";
+                continue;
+            }
             i++;
         }
+        onConnect();
         startSensing();
     }
     void startSensing()
@@ -236,29 +179,145 @@ public:
             cin >> sense;
             if (sense == "exit")
                 return;
-            if (sense.length() != 2)
+            // check if the given command is invalid
+            if (sense.length() != 2 || ((sense[0] != 't' && sense[0] != 'w' && sense[0] != 'g' && sense[0] != 'm') || (sense[1] != 'i' && sense[1] != 'd')))
             {
                 cout << "Enter valid command\n";
                 continue;
             }
-            if (sense[0] == 't')
-                temperature.changeValue(sense[1]);
-            if (sense[0] == 'w')
-                waterLevel.changeValue(sense[1]);
-            if (sense[0] == 'g')
-                gas.changeValue(sense[1]);
-            if (sense[0] == 'm')
-                motion.changeValue(sense[1]);
+            onChange(sense);
         }
+    }
+    void onChange(string sense)
+    {
+        // lambda functions
+        bool (*checkCondtion)(Sensor *) = [](Sensor *s)
+        {
+            if (s->opr == ">")
+                return (s->value > s->limit);
+            if (s->opr == ">=")
+                return (s->value >= s->limit);
+            if (s->opr == "==")
+                return (s->value == s->limit);
+            if (s->opr == "<")
+                return (s->value < s->limit);
+            if (s->opr == "<=")
+                return (s->value <= s->limit);
+            return false;
+        };
+        void (*action)(Sensor *) = [](Sensor *s)
+        {
+            if (s->devicename == "fan")
+            {
+                if (s->func == "turnon")
+                    fan.turnOn();
+                else
+                    fan.turnOff();
+            }
+            else if (s->devicename == "light")
+            {
+                if (s->func == "turnon")
+                    light.turnOn();
+                else
+                    light.turnOff();
+            }
+            else if (s->devicename == "door")
+            {
+                if (s->func == "open")
+                    door.turnOn();
+                else
+                    door.turnOff();
+            }
+            else if (s->devicename == "alarm")
+            {
+                if (s->func == "turnon")
+                    alarm.turnOn();
+                else
+                    alarm.turnOff();
+            }
+        };
+        void (*inverseAction)(Sensor *) = [](Sensor *s)
+        {
+            if (s->devicename == "fan")
+            {
+                if (s->func == "turnon")
+                    fan.turnOff();
+                else
+                    fan.turnOn();
+            }
+            else if (s->devicename == "light")
+            {
+                if (s->func == "turnon")
+                    light.turnOff();
+                else
+                    light.turnOn();
+            }
+            else if (s->devicename == "door")
+            {
+                if (s->func == "open")
+                    door.turnOff();
+                else
+                    door.turnOn();
+            }
+            else if (s->devicename == "alarm")
+            {
+                if (s->func == "turnon")
+                    alarm.turnOff();
+                else
+                    alarm.turnOn();
+            }
+        };
+        void (*onBatteryChange)(Sensor *) = [](Sensor *s)
+        {
+            if (s->status)
+            {
+                s->battery--;
+                if (s->battery > 0)
+                    return;
+                s->status = false;
+                cout << endl
+                     << s->name << "Sensor Disconnected - Low Battery\n";
+            }
+        };
+
+        // identify which sensor value is about to change and pass in the lambda functions as parameters
+        if (sense[0] == 't')
+            temperature.changeValue(sense[1], checkCondtion, action, inverseAction, onBatteryChange);
+        else if (sense[0] == 'w')
+            waterLevel.changeValue(sense[1], checkCondtion, action, inverseAction, onBatteryChange);
+        else if (sense[0] == 'g')
+            gas.changeValue(sense[1], checkCondtion, action, inverseAction, onBatteryChange);
+        else if (sense[0] == 'm')
+            motion.changeValue(sense[1], checkCondtion, action, inverseAction, onBatteryChange);
     }
     void onDisconnect()
     {
+        if (temperature.status)
+        {
+            cout << "\nTemperature Sensor Disconnected \n";
+        }
+        if (motion.status)
+        {
+            cout << "\nMotion Sensor Disconnected \n";
+        }
+        if (waterLevel.status)
+        {
+            cout << "\nWater Level Sensor Disconnected \n";
+        }
+        if (gas.status)
+        {
+            cout << "\nGas Sensor Disconnected \n";
+        }
     }
 };
 
 int main()
 {
+    system("CLS");
     ClientApplication cli;
-    cout << "\n\n\t\t\t\t\tDevice Automation\n";
-    cli.onConnect();
+    cout << "\n\n\t\t\t\t\tDevice Automation\n\n";
+    cli.automateCommands();
+    cli.onDisconnect();
+    char c;
+    cin >> c;
 }

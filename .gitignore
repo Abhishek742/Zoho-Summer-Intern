@@ -1,4 +1,3 @@
 *.exe
 .vscode
-notes.cpp
-temp.cpp
+temperature.cpp
