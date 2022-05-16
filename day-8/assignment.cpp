@@ -29,7 +29,7 @@ public:
     LandlineConnection(string number, string stdcode, float dueAmount) : number(number), stdcode(stdcode), dueAmount(dueAmount){};
     bool isFound(string num)
     {
-        if (this->stdcode == num.substr(0, 3) && this->number == num.substr(3, 8) && num.length() == 9)
+        if (this->stdcode == num.substr(0, num.length() - 6) && this->number == num.substr(num.length() - 6, num.length() - 1))
             return true;
         else
             return false;
@@ -121,10 +121,10 @@ int main()
             break;
         case 2:
             cout << "Enter Landline number,STD code and due amount to add connection : \n";
-            cin >> lan.number >> lan.stdcode >> lan.dueAmount;
-            if (lan.number.length() != 6 || lan.stdcode.length() != 3)
+            cin >> lan.stdcode >> lan.number >> lan.dueAmount;
+            if (lan.number.length() != 6)
             {
-                cout << "Landline number invalid - STD Code must be of 3 digits and Number must be of 6 digits!!!\n";
+                cout << "Landline number invalid - Number must be of 6 digits!!!\n";
                 break;
             }
             landc.addConnection(lan);
