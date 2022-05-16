@@ -46,7 +46,6 @@ class BillPayment
     vector<T> connections;
 
 public:
-    BillPayment() {}
     void addConnection(T connection)
     {
         connections.push_back(connection);
