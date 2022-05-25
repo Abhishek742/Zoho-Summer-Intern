@@ -6,18 +6,23 @@ class Booking
     string passengerName, bookingID;
     Flight flight;
     float bill;
+    bool mealOrdered;
+
 public:
-    Booking() {}
+    Booking()
+    {
+        this->bill = 0;
+        this->mealOrdered = false;
+    }
     void generateBookingID()
     {
     }
-    void bookTicket(Flight &ft)
+    void bookTicket(Flight &flight)
     {
-        flight = ft;
         cout << "Enter the class Economy(e) or Business(b) : ";
         char c;
         cin >> c;
-        ft.printSeats(c);
+        flight.printSeats(c);
         int seatCount;
         cout << "Enter the number of seats to be booked : ";
         cin >> seatCount;
@@ -36,14 +41,20 @@ public:
         if (flight.checkValidTickets(seats, c))
         {
             cout << "Valid";
-            this->bill = flight.bookTicket(seats,c);
-            
+            this->bookMeal();
+            this->bill = flight.bookTicket(seats, c, mealOrdered);
+            cout << "BIll AMount : " << this->bill << endl;
         }
         else
             cout << "invalid";
     }
     void bookMeal()
     {
+        cout << "Do you want to book meal ? Y or N : " << endl;
+        char s;
+        cin >> s;
+        if (s == 'Y')
+            mealOrdered = true;
     }
     void cancelTicket()
     {

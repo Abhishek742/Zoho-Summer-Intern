@@ -8,13 +8,22 @@ class SeatClass
     string seatClassName;
     vector<vector<char>> arrangement;
     vector<int> partitions;
+    vector<vector<bool>> meals;
 
 public:
     SeatClass() : price(0), rowsCount(0){};
     void setDetails(float price, string name)
     {
-        this->price += price;
+        this->price = price;
         this->seatClassName = name;
+    }
+    float getPrice()
+    {
+        return this->price;
+    }
+    void setPrice(float price)
+    {
+        this->price += price;
     }
     void initialiseSeats(string line)
     {
@@ -72,10 +81,14 @@ public:
                     row.push_back('M');
             }
         }
-
         for (int i = 0; i < rowsCount; i++)
         {
             arrangement.push_back(row);
+        }
+        for (int i = 0; i < arrangement.size(); i++)
+        {
+            vector<bool> mealRow(arrangement[i].size(), false);
+            meals.push_back(mealRow);
         }
     }
 
@@ -83,31 +96,69 @@ public:
     {
         cout << "Available " << this->seatClassName << " Seats\n";
         cout << "\t";
-        for (int k = 0,m = 0,n = 0; k < arrangement[0].size(); k++)
+        for (int k = 0, m = 0, n = 0; k < arrangement[0].size(); k++)
         {
             cout << char(k + 'A') << "  ";
             m++;
-            if(m == partitions[n]){
-                cout<<"  ";
+            if (m == partitions[n])
+            {
+                cout << "  ";
                 n++;
                 m = 0;
                 continue;
             }
-        } 
+        }
         cout << endl
              << endl;
         for (int i = 0; i < arrangement.size(); i++)
         {
             cout << i + 1 << "\t";
-            for (int j = 0,m = 0,n = 0; j < arrangement[i].size(); j++)
+            for (int j = 0, m = 0, n = 0; j < arrangement[i].size(); j++)
             {
                 cout << arrangement[i][j] << "  ";
                 m++;
-                if(m == partitions[n]){
-                    cout<<"  ";
+                if (m == partitions[n])
+                {
+                    cout << "  ";
                     n++;
                     m = 0;
+                    continue;
+                }
+            }
+            cout << endl;
+        }
+    }
+    void printMealDetails()
+    {
+        cout << "Meal Details for " << this->seatClassName << "\n";
+        cout << "\t";
+        for (int k = 0, m = 0, n = 0; k < meals[0].size(); k++)
+        {
+            cout << char(k + 'A') << "  ";
+            m++;
+            if (m == partitions[n])
+            {
+                cout << "  ";
+                n++;
+                m = 0;
                 continue;
+            }
+        }
+        cout << endl
+             << endl;
+        for (int i = 0; i < meals.size(); i++)
+        {
+            cout << i + 1 << "\t";
+            for (int j = 0, m = 0, n = 0; j < meals[i].size(); j++)
+            {
+                cout << meals[i][j] << "  ";
+                m++;
+                if (m == partitions[n])
+                {
+                    cout << "  ";
+                    n++;
+                    m = 0;
+                    continue;
                 }
             }
             cout << endl;
@@ -117,18 +168,27 @@ public:
     {
         for (int i = 0; i < seats.size(); i++)
         {
-            if (seats[i].first >= arrangement.size() || seats[i].second >= arrangement[0].size() || arrangement[seats[i].first][seats[i].second] == 'B')
+            if (seats[i].first >= arrangement.size() || seats[i].second >= arrangement[0].size() || arrangement[seats[i].first][seats[i].second] == '-')
                 return false;
         }
         return true;
     }
+    float bookTicket(vector<pair<int, int>> &seats, bool meal)
     {
+        float bill = seats.size() * this->price;
+        if (meal)
+            bill += seats.size() * 200;
         for (int i = 0; i < seats.size(); i++)
         {
-            if (seats[i].first >= arrangement.size() || seats[i].second >= arrangement[0].size() || arrangement[seats[i].first][seats[i].second] == 'B')
-                return false;
+            if (arrangement[seats[i].first][seats[i].second] == 'W' || arrangement[seats[i].first][seats[i].second] == 'A')
+                bill += 100;
+            arrangement[seats[i].first][seats[i].second] = '-';
+            if (meal)
+                meals[seats[i].first][seats[i].second] = true;
         }
-        return true;
+        this->printAvailableSeats();
+        this->printMealDetails();
+        return bill;
     }
 };
 
@@ -189,8 +249,20 @@ public:
         else
             return false;
     }
-    void bookTicket()
+    float bookTicket(vector<pair<int, int>> &seats, char type, bool meal)
     {
+        float bill;
+        if (type == 'b')
+        {
+            bill = business.bookTicket(seats, meal);
+            business.setPrice(200);
+        }
+        else
+        {
+            bill = economic.bookTicket(seats, meal);
+            economic.setPrice(100);
+        }
+        return bill;
     }
     void cancelTicket()
     {

@@ -23,6 +23,7 @@ public:
             if (flightNumber == flights[i].getName())
             {
                 currentBooking.bookTicket(flights[i]);
+                currentBooking.bookTicket(flights[i]);
             }
         }
     }
