@@ -1,5 +1,2 @@
 *.exe
 .vscode
-temperature.cpp
-file.txt
-tokenisetickettype.cpp
