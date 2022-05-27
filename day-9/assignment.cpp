@@ -84,7 +84,6 @@ public:
         printAvailableFlights();
         cout << "\nEnter the flight number : ";
         cin >> flightNumber;
-        cout << flightNumber;
         Booking currentBooking;
         for (int i = 0; i < flights.size(); i++)
         {
@@ -98,21 +97,19 @@ public:
     void cancelTickets()
     {
         string bookingId;
-        bool flag = false;
         while (1)
         {
-            cout << "\nEnter the booking ID to cancel tickets.Example: A114-b-1 : ";
+            printBookedID();
+            cout << "\nEnter the booking ID to cancel tickets : ";
             cin >> bookingId;
             for (int i = 0; i < bookings.size(); i++)
             {
                 if (bookingId == bookings[i].getBookingID())
                 {
                     bookings[i].cancelTicket();
-                    flag = true;
+                    return;
                 }
             }
-            if (flag)
-                break;
             cout << "\nEnter Valid Booking ID!!!\n";
         }
     }
@@ -129,22 +126,19 @@ public:
     void printSummary()
     {
         string bookingId;
-        bool flag = false;
         while (1)
         {
             printBookedID();
-            cout << "\nEnter the booking ID for summary. Example: A114-b-1 : ";
+            cout << "\nEnter the booking ID for summary : ";
             cin >> bookingId;
             for (int i = 0; i < bookings.size(); i++)
             {
                 if (bookingId == bookings[i].getBookingID())
                 {
                     bookings[i].printBookingSummary();
-                    flag = true;
+                    return;
                 }
             }
-            if (flag)
-                break;
             cout << "\nEnter Valid Booking ID!!!\n";
         }
     }

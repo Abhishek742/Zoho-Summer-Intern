@@ -5,7 +5,7 @@ class Booking
     string passengerName, bookingID;
     char seatType;
     Flight *flight;
-    float bill;
+    float bill, cancellationFee;
     bool mealOrdered;
     vector<Ticket> ticketDetails;
     static int count;
@@ -17,6 +17,7 @@ public:
         bookingID = "";
         this->mealOrdered = false;
         count++;
+        cancellationFee = 0;
     }
     string getBookingID()
     {
@@ -64,15 +65,14 @@ public:
         }
         if (flight->checkValidTickets(seats, seatType, 'b'))
         {
-            cout << "Valid";
             this->bookMeal();
             ticketDetails = flight->bookTicket(seats, seatType, mealOrdered);
             calculateBill();
-            printBookingSummary();
             generateBookingID();
+            printBookingSummary();
         }
         else
-            cout << "invalid";
+            cout << "\nInvalid Seat number or Seats Aldready Booked!!!\n";
     }
     void bookMeal()
     {
@@ -84,45 +84,53 @@ public:
         else
             mealOrdered = false;
     }
-    void calculateBill(float amount = 0)
+    void calculateBill()
     {
-        this->bill = amount;
+        this->bill = 0;
         for (int i = 0; i < ticketDetails.size(); i++)
         {
             this->bill += ticketDetails[i].price;
         }
+        this->bill += cancellationFee;
     }
 
     void cancelTicket()
     {
-        vector<pair<int, int>> seats;
         int seatCount;
         cout << "\nEnter the number of seats to be cancelled : ";
         cin >> seatCount;
-        cout << "\nEnter the seats to be cancelled : \n";
-        for (int i = 0; i < seatCount; i++)
+        while (1)
         {
-            seats.push_back(this->setSeat());
-        }
-        if (flight->checkValidTickets(seats, seatType, 'c'))
-        {
-            vector<Ticket>::iterator ticket;
-            for (int i = 0; i < seats.size(); i++)
+            vector<pair<int, int>> seats;
+            cout << "\nEnter the seats to be cancelled : \n";
+            for (int i = 0; i < seatCount; i++)
             {
-                auto ticket = ticketDetails.begin();
-                while (ticket != ticketDetails.end())
-                {
-                    if (ticket->seat.first == seats[i].first && ticket->seat.second == seats[i].second)
-                    {
-                        flight->cancelTicket(ticket, seatType);
-                        ticketDetails.erase(ticket);
-                        break;
-                    }
-                    ticket++;
-                }
+                seats.push_back(this->setSeat());
             }
-            calculateBill(seatCount * 200);
-            printBookingSummary();
+            if (flight->checkValidTickets(seats, seatType, 'c'))
+            {
+                vector<Ticket>::iterator ticket;
+                for (int i = 0; i < seats.size(); i++)
+                {
+                    auto ticket = ticketDetails.begin();
+                    while (ticket != ticketDetails.end())
+                    {
+                        if (ticket->seat.first == seats[i].first && ticket->seat.second == seats[i].second)
+                        {
+                            flight->cancelTicket(ticket, seatType);
+                            cancellationFee += 200;
+                            ticketDetails.erase(ticket);
+                            break;
+                        }
+                        ticket++;
+                    }
+                }
+                this->flight->printSeats(seatType);
+                calculateBill();
+                printBookingSummary();
+                return;
+            }
+            cout << "\nEnter valid Seat numbers!!!";
         }
     }
     void printBookingSummary()

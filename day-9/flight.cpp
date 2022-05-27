@@ -93,6 +93,5 @@ public:
         }
         else
             economic.cancelTicket(ticket);
-        this->printSeats();
     }
 };

@@ -209,12 +209,8 @@ public:
     }
     void cancelTicket(vector<Ticket>::iterator ticket)
     {
-        if (seatsBooked[ticket->seat.first][ticket->seat.second])
-        {
-            seatsBooked[ticket->seat.first][ticket->seat.second] = false;
-            meals[ticket->seat.first][ticket->seat.second] = false;
-        }
-        else
-            cout << ticket->seat.first << " " << ticket->seat.second;
+
+        seatsBooked[ticket->seat.first][ticket->seat.second] = false;
+        meals[ticket->seat.first][ticket->seat.second] = false;
     }
 };
