@@ -44,6 +44,12 @@ struct TableStruct_notepad_2eproto {
   static const uint32_t offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_notepad_2eproto;
+class Content;
+struct ContentDefaultTypeInternal;
+extern ContentDefaultTypeInternal _Content_default_instance_;
+class Project;
+struct ProjectDefaultTypeInternal;
+extern ProjectDefaultTypeInternal _Project_default_instance_;
 class User;
 struct UserDefaultTypeInternal;
 extern UserDefaultTypeInternal _User_default_instance_;
@@ -51,6 +57,8 @@ class Users;
 struct UsersDefaultTypeInternal;
 extern UsersDefaultTypeInternal _Users_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Content* Arena::CreateMaybeMessage<::Content>(Arena*);
+template<> ::Project* Arena::CreateMaybeMessage<::Project>(Arena*);
 template<> ::User* Arena::CreateMaybeMessage<::User>(Arena*);
 template<> ::Users* Arena::CreateMaybeMessage<::Users>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -429,6 +437,364 @@ class Users final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_notepad_2eproto;
 };
+// -------------------------------------------------------------------
+
+class Content final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Content) */ {
+ public:
+  inline Content() : Content(nullptr) {}
+  ~Content() override;
+  explicit PROTOBUF_CONSTEXPR Content(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Content(const Content& from);
+  Content(Content&& from) noexcept
+    : Content() {
+    *this = ::std::move(from);
+  }
+
+  inline Content& operator=(const Content& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Content& operator=(Content&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Content& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Content* internal_default_instance() {
+    return reinterpret_cast<const Content*>(
+               &_Content_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(Content& a, Content& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Content* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Content* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Content* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Content>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Content& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Content& from) {
+    Content::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Content* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Content";
+  }
+  protected:
+  explicit Content(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kLineFieldNumber = 1,
+  };
+  // string line = 1;
+  void clear_line();
+  const std::string& line() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_line(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_line();
+  PROTOBUF_NODISCARD std::string* release_line();
+  void set_allocated_line(std::string* line);
+  private:
+  const std::string& _internal_line() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_line(const std::string& value);
+  std::string* _internal_mutable_line();
+  public:
+
+  // @@protoc_insertion_point(class_scope:Content)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr line_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_notepad_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Project final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Project) */ {
+ public:
+  inline Project() : Project(nullptr) {}
+  ~Project() override;
+  explicit PROTOBUF_CONSTEXPR Project(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Project(const Project& from);
+  Project(Project&& from) noexcept
+    : Project() {
+    *this = ::std::move(from);
+  }
+
+  inline Project& operator=(const Project& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Project& operator=(Project&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Project& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Project* internal_default_instance() {
+    return reinterpret_cast<const Project*>(
+               &_Project_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(Project& a, Project& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Project* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Project* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Project* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Project>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Project& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Project& from) {
+    Project::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Project* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Project";
+  }
+  protected:
+  explicit Project(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kContentsFieldNumber = 4,
+    kProjectIdFieldNumber = 1,
+    kUserIDFieldNumber = 2,
+    kProjectNameFieldNumber = 3,
+  };
+  // repeated .Content contents = 4;
+  int contents_size() const;
+  private:
+  int _internal_contents_size() const;
+  public:
+  void clear_contents();
+  ::Content* mutable_contents(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content >*
+      mutable_contents();
+  private:
+  const ::Content& _internal_contents(int index) const;
+  ::Content* _internal_add_contents();
+  public:
+  const ::Content& contents(int index) const;
+  ::Content* add_contents();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content >&
+      contents() const;
+
+  // string projectId = 1;
+  void clear_projectid();
+  const std::string& projectid() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_projectid(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_projectid();
+  PROTOBUF_NODISCARD std::string* release_projectid();
+  void set_allocated_projectid(std::string* projectid);
+  private:
+  const std::string& _internal_projectid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_projectid(const std::string& value);
+  std::string* _internal_mutable_projectid();
+  public:
+
+  // string userID = 2;
+  void clear_userid();
+  const std::string& userid() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_userid(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_userid();
+  PROTOBUF_NODISCARD std::string* release_userid();
+  void set_allocated_userid(std::string* userid);
+  private:
+  const std::string& _internal_userid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_userid(const std::string& value);
+  std::string* _internal_mutable_userid();
+  public:
+
+  // string projectName = 3;
+  void clear_projectname();
+  const std::string& projectname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_projectname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_projectname();
+  PROTOBUF_NODISCARD std::string* release_projectname();
+  void set_allocated_projectname(std::string* projectname);
+  private:
+  const std::string& _internal_projectname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_projectname(const std::string& value);
+  std::string* _internal_mutable_projectname();
+  public:
+
+  // @@protoc_insertion_point(class_scope:Project)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content > contents_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr projectid_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr userid_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr projectname_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_notepad_2eproto;
+};
 // ===================================================================
 
 
@@ -734,9 +1100,261 @@ Users::users() const {
   return _impl_.users_;
 }
 
+// -------------------------------------------------------------------
+
+// Content
+
+// string line = 1;
+inline void Content::clear_line() {
+  _impl_.line_.ClearToEmpty();
+}
+inline const std::string& Content::line() const {
+  // @@protoc_insertion_point(field_get:Content.line)
+  return _internal_line();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Content::set_line(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.line_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Content.line)
+}
+inline std::string* Content::mutable_line() {
+  std::string* _s = _internal_mutable_line();
+  // @@protoc_insertion_point(field_mutable:Content.line)
+  return _s;
+}
+inline const std::string& Content::_internal_line() const {
+  return _impl_.line_.Get();
+}
+inline void Content::_internal_set_line(const std::string& value) {
+  
+  _impl_.line_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Content::_internal_mutable_line() {
+  
+  return _impl_.line_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Content::release_line() {
+  // @@protoc_insertion_point(field_release:Content.line)
+  return _impl_.line_.Release();
+}
+inline void Content::set_allocated_line(std::string* line) {
+  if (line != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.line_.SetAllocated(line, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.line_.IsDefault()) {
+    _impl_.line_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Content.line)
+}
+
+// -------------------------------------------------------------------
+
+// Project
+
+// string projectId = 1;
+inline void Project::clear_projectid() {
+  _impl_.projectid_.ClearToEmpty();
+}
+inline const std::string& Project::projectid() const {
+  // @@protoc_insertion_point(field_get:Project.projectId)
+  return _internal_projectid();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Project::set_projectid(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.projectid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Project.projectId)
+}
+inline std::string* Project::mutable_projectid() {
+  std::string* _s = _internal_mutable_projectid();
+  // @@protoc_insertion_point(field_mutable:Project.projectId)
+  return _s;
+}
+inline const std::string& Project::_internal_projectid() const {
+  return _impl_.projectid_.Get();
+}
+inline void Project::_internal_set_projectid(const std::string& value) {
+  
+  _impl_.projectid_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Project::_internal_mutable_projectid() {
+  
+  return _impl_.projectid_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Project::release_projectid() {
+  // @@protoc_insertion_point(field_release:Project.projectId)
+  return _impl_.projectid_.Release();
+}
+inline void Project::set_allocated_projectid(std::string* projectid) {
+  if (projectid != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.projectid_.SetAllocated(projectid, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.projectid_.IsDefault()) {
+    _impl_.projectid_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Project.projectId)
+}
+
+// string userID = 2;
+inline void Project::clear_userid() {
+  _impl_.userid_.ClearToEmpty();
+}
+inline const std::string& Project::userid() const {
+  // @@protoc_insertion_point(field_get:Project.userID)
+  return _internal_userid();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Project::set_userid(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.userid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Project.userID)
+}
+inline std::string* Project::mutable_userid() {
+  std::string* _s = _internal_mutable_userid();
+  // @@protoc_insertion_point(field_mutable:Project.userID)
+  return _s;
+}
+inline const std::string& Project::_internal_userid() const {
+  return _impl_.userid_.Get();
+}
+inline void Project::_internal_set_userid(const std::string& value) {
+  
+  _impl_.userid_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Project::_internal_mutable_userid() {
+  
+  return _impl_.userid_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Project::release_userid() {
+  // @@protoc_insertion_point(field_release:Project.userID)
+  return _impl_.userid_.Release();
+}
+inline void Project::set_allocated_userid(std::string* userid) {
+  if (userid != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.userid_.SetAllocated(userid, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.userid_.IsDefault()) {
+    _impl_.userid_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Project.userID)
+}
+
+// string projectName = 3;
+inline void Project::clear_projectname() {
+  _impl_.projectname_.ClearToEmpty();
+}
+inline const std::string& Project::projectname() const {
+  // @@protoc_insertion_point(field_get:Project.projectName)
+  return _internal_projectname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Project::set_projectname(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.projectname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Project.projectName)
+}
+inline std::string* Project::mutable_projectname() {
+  std::string* _s = _internal_mutable_projectname();
+  // @@protoc_insertion_point(field_mutable:Project.projectName)
+  return _s;
+}
+inline const std::string& Project::_internal_projectname() const {
+  return _impl_.projectname_.Get();
+}
+inline void Project::_internal_set_projectname(const std::string& value) {
+  
+  _impl_.projectname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Project::_internal_mutable_projectname() {
+  
+  return _impl_.projectname_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Project::release_projectname() {
+  // @@protoc_insertion_point(field_release:Project.projectName)
+  return _impl_.projectname_.Release();
+}
+inline void Project::set_allocated_projectname(std::string* projectname) {
+  if (projectname != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.projectname_.SetAllocated(projectname, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.projectname_.IsDefault()) {
+    _impl_.projectname_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Project.projectName)
+}
+
+// repeated .Content contents = 4;
+inline int Project::_internal_contents_size() const {
+  return _impl_.contents_.size();
+}
+inline int Project::contents_size() const {
+  return _internal_contents_size();
+}
+inline void Project::clear_contents() {
+  _impl_.contents_.Clear();
+}
+inline ::Content* Project::mutable_contents(int index) {
+  // @@protoc_insertion_point(field_mutable:Project.contents)
+  return _impl_.contents_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content >*
+Project::mutable_contents() {
+  // @@protoc_insertion_point(field_mutable_list:Project.contents)
+  return &_impl_.contents_;
+}
+inline const ::Content& Project::_internal_contents(int index) const {
+  return _impl_.contents_.Get(index);
+}
+inline const ::Content& Project::contents(int index) const {
+  // @@protoc_insertion_point(field_get:Project.contents)
+  return _internal_contents(index);
+}
+inline ::Content* Project::_internal_add_contents() {
+  return _impl_.contents_.Add();
+}
+inline ::Content* Project::add_contents() {
+  ::Content* _add = _internal_add_contents();
+  // @@protoc_insertion_point(field_add:Project.contents)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content >&
+Project::contents() const {
+  // @@protoc_insertion_point(field_list:Project.contents)
+  return _impl_.contents_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

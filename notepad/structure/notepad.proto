@@ -11,3 +11,14 @@ message User{
 message Users{
     repeated User users = 1;
 }
+
+message Content{
+    string line = 1;
+}
+
+message Project{
+    string projectId = 1;
+    string userID = 2;
+    string projectName = 3;
+    repeated Content contents = 4;
+}

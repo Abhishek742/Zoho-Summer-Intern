@@ -4,22 +4,8 @@ using namespace std;
 
 class UserPortal
 {
-    Users users;
-
 public:
-    void readUsers()
-    {
-        ifstream inStream;
-        inStream.open("./user-portal/users.txt", ios::in);
-        users.ParseFromIstream(&inStream);
-    }
-    void writeUsers()
-    {
-        ofstream outStream;
-        outStream.open("./user-portal/users.txt", ios::out);
-        users.SerializeToOstream(&outStream);
-    }
-    int isExistingUser(string username)
+    int isExistingUser(string username,Users users)
     {
         for (int i = 0; i < users.users_size(); i++)
         {
@@ -76,12 +62,9 @@ public:
         user->set_password(password);
         user->set_location(location);
     }
-    void signup()
+    void signup(Users &users)
     {
         cout << "Sign Up to Notepad\n";
-        // set the users who were added previously
-        readUsers();
-
         string name, username, password, location, email;
         cout << "Enter Name : ";
         cin >> name;
@@ -95,7 +78,7 @@ public:
         cin >> location;
 
         // username aldready exists
-        if (isExistingUser(username) != -1)
+        if (isExistingUser(username,users) != -1)
         {
             cout << "User Name Aldready exists!!!\n";
             return;
@@ -113,11 +96,8 @@ public:
 
         // add a user to the users
         addUser(users.add_users(), name, username, email, password, location);
-
-        // write updated users object to the file
-        writeUsers();
     }
-    int login()
+    int login(Users &users)
     {
         string username, password;
         cout << "\nEnter Login Details\n";
@@ -125,7 +105,7 @@ public:
         cin >> username;
         cout << "Password : ";
         cin >> password;
-        int index = isExistingUser(username);
+        int index = isExistingUser(username,users);
         if (index == -1)
         {
             cout << "Invalid User Name!!!";
@@ -133,20 +113,10 @@ public:
         }
         encrypt(password);
         const User &user = users.users(index);
-        if(user.password() == password) return index;
+        if (user.password() == password)
+            return index;
 
-        cout<<"Invalid Password!!!\n";
+        cout << "Invalid Password!!!\n";
         return -1;
-    }
-
-    // meant for debugging
-    void printUsers()
-    {
-        cout << "\nUSERS\n";
-        for (int i = 0; i < users.users_size(); i++)
-        {
-            const User &user = users.users(i);
-            cout << "Name : " << user.name() << " Email : " << user.email() << " Password : " << user.password() << endl;
-        }
     }
 };
