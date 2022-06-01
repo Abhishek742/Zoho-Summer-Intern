@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 #include "../structure/notepad.pb.h"
+#include<google/protobuf/repeated_ptr_field.h>
 using namespace std;
+using namespace google::protobuf;
 
 namespace fs = std::filesystem;
 
@@ -62,7 +64,7 @@ public:
             {
                 break;
             }
-            cout << "File Aldready Exists!!! Enter another filename!!!\n";
+            cout << "File already Exists!!! Enter another filename!!!\n";
         }
         project.set_projectname(this->currProjectName);
         project.set_userid(this->username);
@@ -101,15 +103,50 @@ public:
     }
     void update(Project &project)
     {
+        cout << "Enter the line numbers(range) to be updated, (i to i) for a single line : ";
+        int start, end;
+        cin >> start >> end;
+        if (start <= 0 || end > project.contents_size() || start > end)
+        {
+            cout << "Invalid line numbers!!!\n";
+            return;
+        }
+        for (int i = start - 1; i < end; i++)
+        {
+            cout << i + 1 << " ~ ";
+            Content *content = project.mutable_contents(i);
+            string line;
+            getline(cin >> ws, line);
+            content->set_line(line);
+        }
     }
     void remove(Project &project)
     {
+        cout << "Enter the line numbers(range) to be removed, (i to i) for a single line : ";
+        int start, end,num;
+        cin >> start >> end;
+        if (start <= 0 || end > project.contents_size() || start > end)
+        {
+            cout << "Invalid line numbers!!!\n";
+            return;
+        }
+        start--;
+        end--;
+        //num will have the number of elements to be removed from the start index
+        if(start == end) num = 1;
+        else num = end - start + 1;
+        
+        RepeatedPtrField<Content> *rep = project.mutable_contents();
+
+        //delete elements from start to start + num - 1 index
+        rep->DeleteSubrange(start,num);
     }
+
     void display(Project &project)
     {
-        cout << "Project Details \n";
-        cout << "Project Name : " << project.projectname() << endl;
-        cout << "User Name : " << project.userid() << endl;
+        // cout << "Project Details \n";
+        // cout << "Project Name : " << project.projectname() << endl;
+        // cout << "User Name : " << project.userid() << endl;
         cout << "Project contents : \n";
         for (int i = 0; i < project.contents_size(); i++)
         {
@@ -143,7 +180,10 @@ public:
             case 4:
                 this->display(currProject);
                 break;
+            case 5:
+                return;
             }
+
             // write the current state of the object into its file
             writeProject(currProject);
         }

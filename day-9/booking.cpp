@@ -72,7 +72,7 @@ public:
             printBookingSummary();
         }
         else
-            cout << "\nInvalid Seat number or Seats Aldready Booked!!!\n";
+            cout << "\nInvalid Seat number or Seats already Booked!!!\n";
     }
     void bookMeal()
     {

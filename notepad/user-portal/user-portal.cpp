@@ -77,10 +77,10 @@ public:
         cout << "Enter Location : ";
         cin >> location;
 
-        // username aldready exists
+        // username already exists
         if (isExistingUser(username,users) != -1)
         {
-            cout << "User Name Aldready exists!!!\n";
+            cout << "User Name already exists!!!\n";
             return;
         }
 
