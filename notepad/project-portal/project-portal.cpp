@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "../structure/notepad.pb.h"
-#include<google/protobuf/repeated_ptr_field.h>
+#include "../version-control/version-control.cpp"
 using namespace std;
 using namespace google::protobuf;
 
@@ -22,19 +22,10 @@ public:
         {
             fs::create_directory(path);
         }
-    }
-    void addLineContent(Content *content, string &line)
-    {
-        content->set_line(line);
-    }
-    bool isExistingFile()
-    {
-        for (int i = 0; i < projects.size(); i++)
+        for (const auto &entry : fs::directory_iterator(path))
         {
-            if (currProjectName == projects[i])
-                return true;
+            projects.push_back(entry.path().filename().string());
         }
-        return false;
     }
     void readProject(Project &project)
     {
@@ -52,9 +43,23 @@ public:
         project.SerializeToOstream(&outStream);
         outStream.close();
     }
+    void addLineContent(Content *content, string &line)
+    {
+        content->set_line(line);
+    }
+    bool isExistingFile()
+    {
+        for (int i = 0; i < projects.size(); i++)
+        {
+            if (currProjectName + ".txt" == projects[i])
+                return true;
+        }
+        return false;
+    }
     void createNewFile()
     {
         Project project;
+        Operation op;
         string p_id;
         while (1)
         {
@@ -66,6 +71,8 @@ public:
             }
             cout << "File already Exists!!! Enter another filename!!!\n";
         }
+
+        // set project attributes
         project.set_projectname(this->currProjectName);
         project.set_userid(this->username);
         p_id = project.userid() + '_' + project.projectname();
@@ -78,15 +85,23 @@ public:
             if (line == "eof")
                 break;
             addLineContent(project.add_contents(), line);
+            addLineContent(op.add_contents(), line);
         }
         writeProject(project);
+
+        // set operation attributes
+        op.set_operationtype("add");
+        op.set_startline(0);
+        op.set_endline(project.contents_size() - 1);
+
+        VersionControl vc(username, project.projectname());
+        Versions v;
+        vc.writeVersions(v);
+        vc.addOperation(op);
+        projects.push_back(project.projectname() + ".txt");
     }
     void listAllProjects()
     {
-        for (const auto &entry : fs::directory_iterator(path))
-        {
-            projects.push_back(entry.path().filename().string());
-        }
         for (int i = 0; i < projects.size(); i++)
         {
             cout << projects[i] << "  ";
@@ -100,9 +115,21 @@ public:
         cout << "Enter the line to append to file\n";
         getline(cin >> ws, line);
         addLineContent(project.add_contents(), line);
+
+        Operation op;
+        // set operation attributes
+        op.set_operationtype("add");
+        op.set_startline(project.contents_size());
+        op.set_endline(project.contents_size());
+        addLineContent(op.add_contents(), line);
+
+        // add operation to version control
+        VersionControl vc(username, project.projectname());
+        vc.addOperation(op);
     }
     void update(Project &project)
     {
+        Operation op;
         cout << "Enter the line numbers(range) to be updated, (i to i) for a single line : ";
         int start, end;
         cin >> start >> end;
@@ -111,19 +138,33 @@ public:
             cout << "Invalid line numbers!!!\n";
             return;
         }
-        for (int i = start - 1; i < end; i++)
+        start--;
+        end--;
+        for (int i = start; i <= end; i++)
         {
             cout << i + 1 << " ~ ";
             Content *content = project.mutable_contents(i);
+            Content *oprContent = op.add_contents();
+            oprContent->set_line(content->line());
             string line;
             getline(cin >> ws, line);
             content->set_line(line);
         }
+
+        // set operation attributes
+        op.set_operationtype("update");
+        op.set_startline(start - 1);
+        op.set_endline(end - 1);
+
+        // add operation to version control
+        VersionControl vc(username, project.projectname());
+        vc.addOperation(op);
     }
     void remove(Project &project)
     {
+        Operation op;
         cout << "Enter the line numbers(range) to be removed, (i to i) for a single line : ";
-        int start, end,num;
+        int start, end, num;
         cin >> start >> end;
         if (start <= 0 || end > project.contents_size() || start > end)
         {
@@ -132,21 +173,38 @@ public:
         }
         start--;
         end--;
-        //num will have the number of elements to be removed from the start index
-        if(start == end) num = 1;
-        else num = end - start + 1;
-        
+        // num will have the number of elements to be removed from the start index
+        if (start == end)
+            num = 1;
+        else
+            num = end - start + 1;
+
         RepeatedPtrField<Content> *rep = project.mutable_contents();
 
-        //delete elements from start to start + num - 1 index
-        rep->DeleteSubrange(start,num);
+        //set content for operation
+        for (int i = start; i <= end; i++)
+        {
+            const Content content = project.contents(i);
+            Content *oprContent = op.add_contents();
+            oprContent->set_line(content.line());
+        }
+
+        // set operation attributes
+        op.set_operationtype("remove");
+        op.set_startline(start - 1);
+        op.set_endline(end - 1);
+
+        // add operation to version control
+        VersionControl vc(username, project.projectname());
+        vc.addOperation(op);
+
+
+        // delete elements from start to start + num - 1 index
+        rep->DeleteSubrange(start, num);
     }
 
     void display(Project &project)
     {
-        // cout << "Project Details \n";
-        // cout << "Project Name : " << project.projectname() << endl;
-        // cout << "User Name : " << project.userid() << endl;
         cout << "Project contents : \n";
         for (int i = 0; i < project.contents_size(); i++)
         {

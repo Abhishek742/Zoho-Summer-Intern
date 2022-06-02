@@ -47,6 +47,9 @@ extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table
 class Content;
 struct ContentDefaultTypeInternal;
 extern ContentDefaultTypeInternal _Content_default_instance_;
+class Operation;
+struct OperationDefaultTypeInternal;
+extern OperationDefaultTypeInternal _Operation_default_instance_;
 class Project;
 struct ProjectDefaultTypeInternal;
 extern ProjectDefaultTypeInternal _Project_default_instance_;
@@ -56,11 +59,20 @@ extern UserDefaultTypeInternal _User_default_instance_;
 class Users;
 struct UsersDefaultTypeInternal;
 extern UsersDefaultTypeInternal _Users_default_instance_;
+class Version;
+struct VersionDefaultTypeInternal;
+extern VersionDefaultTypeInternal _Version_default_instance_;
+class Versions;
+struct VersionsDefaultTypeInternal;
+extern VersionsDefaultTypeInternal _Versions_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::Content* Arena::CreateMaybeMessage<::Content>(Arena*);
+template<> ::Operation* Arena::CreateMaybeMessage<::Operation>(Arena*);
 template<> ::Project* Arena::CreateMaybeMessage<::Project>(Arena*);
 template<> ::User* Arena::CreateMaybeMessage<::User>(Arena*);
 template<> ::Users* Arena::CreateMaybeMessage<::Users>(Arena*);
+template<> ::Version* Arena::CreateMaybeMessage<::Version>(Arena*);
+template<> ::Versions* Arena::CreateMaybeMessage<::Versions>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
 // ===================================================================
@@ -795,6 +807,563 @@ class Project final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_notepad_2eproto;
 };
+// -------------------------------------------------------------------
+
+class Operation final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Operation) */ {
+ public:
+  inline Operation() : Operation(nullptr) {}
+  ~Operation() override;
+  explicit PROTOBUF_CONSTEXPR Operation(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Operation(const Operation& from);
+  Operation(Operation&& from) noexcept
+    : Operation() {
+    *this = ::std::move(from);
+  }
+
+  inline Operation& operator=(const Operation& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Operation& operator=(Operation&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Operation& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Operation* internal_default_instance() {
+    return reinterpret_cast<const Operation*>(
+               &_Operation_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(Operation& a, Operation& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Operation* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Operation* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Operation* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Operation>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Operation& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Operation& from) {
+    Operation::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Operation* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Operation";
+  }
+  protected:
+  explicit Operation(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kContentsFieldNumber = 4,
+    kOperationTypeFieldNumber = 1,
+    kStartLineFieldNumber = 2,
+    kEndLineFieldNumber = 3,
+  };
+  // repeated .Content contents = 4;
+  int contents_size() const;
+  private:
+  int _internal_contents_size() const;
+  public:
+  void clear_contents();
+  ::Content* mutable_contents(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content >*
+      mutable_contents();
+  private:
+  const ::Content& _internal_contents(int index) const;
+  ::Content* _internal_add_contents();
+  public:
+  const ::Content& contents(int index) const;
+  ::Content* add_contents();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content >&
+      contents() const;
+
+  // string operationType = 1;
+  void clear_operationtype();
+  const std::string& operationtype() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_operationtype(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_operationtype();
+  PROTOBUF_NODISCARD std::string* release_operationtype();
+  void set_allocated_operationtype(std::string* operationtype);
+  private:
+  const std::string& _internal_operationtype() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_operationtype(const std::string& value);
+  std::string* _internal_mutable_operationtype();
+  public:
+
+  // int32 startLine = 2;
+  void clear_startline();
+  int32_t startline() const;
+  void set_startline(int32_t value);
+  private:
+  int32_t _internal_startline() const;
+  void _internal_set_startline(int32_t value);
+  public:
+
+  // int32 endLine = 3;
+  void clear_endline();
+  int32_t endline() const;
+  void set_endline(int32_t value);
+  private:
+  int32_t _internal_endline() const;
+  void _internal_set_endline(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Operation)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content > contents_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr operationtype_;
+    int32_t startline_;
+    int32_t endline_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_notepad_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Version final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Version) */ {
+ public:
+  inline Version() : Version(nullptr) {}
+  ~Version() override;
+  explicit PROTOBUF_CONSTEXPR Version(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Version(const Version& from);
+  Version(Version&& from) noexcept
+    : Version() {
+    *this = ::std::move(from);
+  }
+
+  inline Version& operator=(const Version& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Version& operator=(Version&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Version& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Version* internal_default_instance() {
+    return reinterpret_cast<const Version*>(
+               &_Version_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(Version& a, Version& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Version* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Version* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Version* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Version>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Version& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Version& from) {
+    Version::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Version* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Version";
+  }
+  protected:
+  explicit Version(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kOperationFieldNumber = 3,
+    kVersionIDFieldNumber = 1,
+    kCreatedTimeFieldNumber = 2,
+  };
+  // repeated .Operation operation = 3;
+  int operation_size() const;
+  private:
+  int _internal_operation_size() const;
+  public:
+  void clear_operation();
+  ::Operation* mutable_operation(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Operation >*
+      mutable_operation();
+  private:
+  const ::Operation& _internal_operation(int index) const;
+  ::Operation* _internal_add_operation();
+  public:
+  const ::Operation& operation(int index) const;
+  ::Operation* add_operation();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Operation >&
+      operation() const;
+
+  // string versionID = 1;
+  void clear_versionid();
+  const std::string& versionid() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_versionid(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_versionid();
+  PROTOBUF_NODISCARD std::string* release_versionid();
+  void set_allocated_versionid(std::string* versionid);
+  private:
+  const std::string& _internal_versionid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_versionid(const std::string& value);
+  std::string* _internal_mutable_versionid();
+  public:
+
+  // string createdTime = 2;
+  void clear_createdtime();
+  const std::string& createdtime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_createdtime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_createdtime();
+  PROTOBUF_NODISCARD std::string* release_createdtime();
+  void set_allocated_createdtime(std::string* createdtime);
+  private:
+  const std::string& _internal_createdtime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_createdtime(const std::string& value);
+  std::string* _internal_mutable_createdtime();
+  public:
+
+  // @@protoc_insertion_point(class_scope:Version)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Operation > operation_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr versionid_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr createdtime_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_notepad_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Versions final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Versions) */ {
+ public:
+  inline Versions() : Versions(nullptr) {}
+  ~Versions() override;
+  explicit PROTOBUF_CONSTEXPR Versions(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Versions(const Versions& from);
+  Versions(Versions&& from) noexcept
+    : Versions() {
+    *this = ::std::move(from);
+  }
+
+  inline Versions& operator=(const Versions& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Versions& operator=(Versions&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Versions& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Versions* internal_default_instance() {
+    return reinterpret_cast<const Versions*>(
+               &_Versions_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(Versions& a, Versions& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Versions* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Versions* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Versions* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Versions>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Versions& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Versions& from) {
+    Versions::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Versions* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Versions";
+  }
+  protected:
+  explicit Versions(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionsFieldNumber = 3,
+    kProjectIDFieldNumber = 1,
+  };
+  // repeated .Version versions = 3;
+  int versions_size() const;
+  private:
+  int _internal_versions_size() const;
+  public:
+  void clear_versions();
+  ::Version* mutable_versions(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Version >*
+      mutable_versions();
+  private:
+  const ::Version& _internal_versions(int index) const;
+  ::Version* _internal_add_versions();
+  public:
+  const ::Version& versions(int index) const;
+  ::Version* add_versions();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Version >&
+      versions() const;
+
+  // string projectID = 1;
+  void clear_projectid();
+  const std::string& projectid() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_projectid(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_projectid();
+  PROTOBUF_NODISCARD std::string* release_projectid();
+  void set_allocated_projectid(std::string* projectid);
+  private:
+  const std::string& _internal_projectid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_projectid(const std::string& value);
+  std::string* _internal_mutable_projectid();
+  public:
+
+  // @@protoc_insertion_point(class_scope:Versions)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Version > versions_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr projectid_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_notepad_2eproto;
+};
 // ===================================================================
 
 
@@ -1348,9 +1917,387 @@ Project::contents() const {
   return _impl_.contents_;
 }
 
+// -------------------------------------------------------------------
+
+// Operation
+
+// string operationType = 1;
+inline void Operation::clear_operationtype() {
+  _impl_.operationtype_.ClearToEmpty();
+}
+inline const std::string& Operation::operationtype() const {
+  // @@protoc_insertion_point(field_get:Operation.operationType)
+  return _internal_operationtype();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Operation::set_operationtype(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.operationtype_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Operation.operationType)
+}
+inline std::string* Operation::mutable_operationtype() {
+  std::string* _s = _internal_mutable_operationtype();
+  // @@protoc_insertion_point(field_mutable:Operation.operationType)
+  return _s;
+}
+inline const std::string& Operation::_internal_operationtype() const {
+  return _impl_.operationtype_.Get();
+}
+inline void Operation::_internal_set_operationtype(const std::string& value) {
+  
+  _impl_.operationtype_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Operation::_internal_mutable_operationtype() {
+  
+  return _impl_.operationtype_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Operation::release_operationtype() {
+  // @@protoc_insertion_point(field_release:Operation.operationType)
+  return _impl_.operationtype_.Release();
+}
+inline void Operation::set_allocated_operationtype(std::string* operationtype) {
+  if (operationtype != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.operationtype_.SetAllocated(operationtype, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.operationtype_.IsDefault()) {
+    _impl_.operationtype_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Operation.operationType)
+}
+
+// int32 startLine = 2;
+inline void Operation::clear_startline() {
+  _impl_.startline_ = 0;
+}
+inline int32_t Operation::_internal_startline() const {
+  return _impl_.startline_;
+}
+inline int32_t Operation::startline() const {
+  // @@protoc_insertion_point(field_get:Operation.startLine)
+  return _internal_startline();
+}
+inline void Operation::_internal_set_startline(int32_t value) {
+  
+  _impl_.startline_ = value;
+}
+inline void Operation::set_startline(int32_t value) {
+  _internal_set_startline(value);
+  // @@protoc_insertion_point(field_set:Operation.startLine)
+}
+
+// int32 endLine = 3;
+inline void Operation::clear_endline() {
+  _impl_.endline_ = 0;
+}
+inline int32_t Operation::_internal_endline() const {
+  return _impl_.endline_;
+}
+inline int32_t Operation::endline() const {
+  // @@protoc_insertion_point(field_get:Operation.endLine)
+  return _internal_endline();
+}
+inline void Operation::_internal_set_endline(int32_t value) {
+  
+  _impl_.endline_ = value;
+}
+inline void Operation::set_endline(int32_t value) {
+  _internal_set_endline(value);
+  // @@protoc_insertion_point(field_set:Operation.endLine)
+}
+
+// repeated .Content contents = 4;
+inline int Operation::_internal_contents_size() const {
+  return _impl_.contents_.size();
+}
+inline int Operation::contents_size() const {
+  return _internal_contents_size();
+}
+inline void Operation::clear_contents() {
+  _impl_.contents_.Clear();
+}
+inline ::Content* Operation::mutable_contents(int index) {
+  // @@protoc_insertion_point(field_mutable:Operation.contents)
+  return _impl_.contents_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content >*
+Operation::mutable_contents() {
+  // @@protoc_insertion_point(field_mutable_list:Operation.contents)
+  return &_impl_.contents_;
+}
+inline const ::Content& Operation::_internal_contents(int index) const {
+  return _impl_.contents_.Get(index);
+}
+inline const ::Content& Operation::contents(int index) const {
+  // @@protoc_insertion_point(field_get:Operation.contents)
+  return _internal_contents(index);
+}
+inline ::Content* Operation::_internal_add_contents() {
+  return _impl_.contents_.Add();
+}
+inline ::Content* Operation::add_contents() {
+  ::Content* _add = _internal_add_contents();
+  // @@protoc_insertion_point(field_add:Operation.contents)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Content >&
+Operation::contents() const {
+  // @@protoc_insertion_point(field_list:Operation.contents)
+  return _impl_.contents_;
+}
+
+// -------------------------------------------------------------------
+
+// Version
+
+// string versionID = 1;
+inline void Version::clear_versionid() {
+  _impl_.versionid_.ClearToEmpty();
+}
+inline const std::string& Version::versionid() const {
+  // @@protoc_insertion_point(field_get:Version.versionID)
+  return _internal_versionid();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Version::set_versionid(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.versionid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Version.versionID)
+}
+inline std::string* Version::mutable_versionid() {
+  std::string* _s = _internal_mutable_versionid();
+  // @@protoc_insertion_point(field_mutable:Version.versionID)
+  return _s;
+}
+inline const std::string& Version::_internal_versionid() const {
+  return _impl_.versionid_.Get();
+}
+inline void Version::_internal_set_versionid(const std::string& value) {
+  
+  _impl_.versionid_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Version::_internal_mutable_versionid() {
+  
+  return _impl_.versionid_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Version::release_versionid() {
+  // @@protoc_insertion_point(field_release:Version.versionID)
+  return _impl_.versionid_.Release();
+}
+inline void Version::set_allocated_versionid(std::string* versionid) {
+  if (versionid != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.versionid_.SetAllocated(versionid, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.versionid_.IsDefault()) {
+    _impl_.versionid_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Version.versionID)
+}
+
+// string createdTime = 2;
+inline void Version::clear_createdtime() {
+  _impl_.createdtime_.ClearToEmpty();
+}
+inline const std::string& Version::createdtime() const {
+  // @@protoc_insertion_point(field_get:Version.createdTime)
+  return _internal_createdtime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Version::set_createdtime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.createdtime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Version.createdTime)
+}
+inline std::string* Version::mutable_createdtime() {
+  std::string* _s = _internal_mutable_createdtime();
+  // @@protoc_insertion_point(field_mutable:Version.createdTime)
+  return _s;
+}
+inline const std::string& Version::_internal_createdtime() const {
+  return _impl_.createdtime_.Get();
+}
+inline void Version::_internal_set_createdtime(const std::string& value) {
+  
+  _impl_.createdtime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Version::_internal_mutable_createdtime() {
+  
+  return _impl_.createdtime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Version::release_createdtime() {
+  // @@protoc_insertion_point(field_release:Version.createdTime)
+  return _impl_.createdtime_.Release();
+}
+inline void Version::set_allocated_createdtime(std::string* createdtime) {
+  if (createdtime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.createdtime_.SetAllocated(createdtime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.createdtime_.IsDefault()) {
+    _impl_.createdtime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Version.createdTime)
+}
+
+// repeated .Operation operation = 3;
+inline int Version::_internal_operation_size() const {
+  return _impl_.operation_.size();
+}
+inline int Version::operation_size() const {
+  return _internal_operation_size();
+}
+inline void Version::clear_operation() {
+  _impl_.operation_.Clear();
+}
+inline ::Operation* Version::mutable_operation(int index) {
+  // @@protoc_insertion_point(field_mutable:Version.operation)
+  return _impl_.operation_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Operation >*
+Version::mutable_operation() {
+  // @@protoc_insertion_point(field_mutable_list:Version.operation)
+  return &_impl_.operation_;
+}
+inline const ::Operation& Version::_internal_operation(int index) const {
+  return _impl_.operation_.Get(index);
+}
+inline const ::Operation& Version::operation(int index) const {
+  // @@protoc_insertion_point(field_get:Version.operation)
+  return _internal_operation(index);
+}
+inline ::Operation* Version::_internal_add_operation() {
+  return _impl_.operation_.Add();
+}
+inline ::Operation* Version::add_operation() {
+  ::Operation* _add = _internal_add_operation();
+  // @@protoc_insertion_point(field_add:Version.operation)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Operation >&
+Version::operation() const {
+  // @@protoc_insertion_point(field_list:Version.operation)
+  return _impl_.operation_;
+}
+
+// -------------------------------------------------------------------
+
+// Versions
+
+// string projectID = 1;
+inline void Versions::clear_projectid() {
+  _impl_.projectid_.ClearToEmpty();
+}
+inline const std::string& Versions::projectid() const {
+  // @@protoc_insertion_point(field_get:Versions.projectID)
+  return _internal_projectid();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Versions::set_projectid(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.projectid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Versions.projectID)
+}
+inline std::string* Versions::mutable_projectid() {
+  std::string* _s = _internal_mutable_projectid();
+  // @@protoc_insertion_point(field_mutable:Versions.projectID)
+  return _s;
+}
+inline const std::string& Versions::_internal_projectid() const {
+  return _impl_.projectid_.Get();
+}
+inline void Versions::_internal_set_projectid(const std::string& value) {
+  
+  _impl_.projectid_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Versions::_internal_mutable_projectid() {
+  
+  return _impl_.projectid_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Versions::release_projectid() {
+  // @@protoc_insertion_point(field_release:Versions.projectID)
+  return _impl_.projectid_.Release();
+}
+inline void Versions::set_allocated_projectid(std::string* projectid) {
+  if (projectid != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.projectid_.SetAllocated(projectid, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.projectid_.IsDefault()) {
+    _impl_.projectid_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Versions.projectID)
+}
+
+// repeated .Version versions = 3;
+inline int Versions::_internal_versions_size() const {
+  return _impl_.versions_.size();
+}
+inline int Versions::versions_size() const {
+  return _internal_versions_size();
+}
+inline void Versions::clear_versions() {
+  _impl_.versions_.Clear();
+}
+inline ::Version* Versions::mutable_versions(int index) {
+  // @@protoc_insertion_point(field_mutable:Versions.versions)
+  return _impl_.versions_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Version >*
+Versions::mutable_versions() {
+  // @@protoc_insertion_point(field_mutable_list:Versions.versions)
+  return &_impl_.versions_;
+}
+inline const ::Version& Versions::_internal_versions(int index) const {
+  return _impl_.versions_.Get(index);
+}
+inline const ::Version& Versions::versions(int index) const {
+  // @@protoc_insertion_point(field_get:Versions.versions)
+  return _internal_versions(index);
+}
+inline ::Version* Versions::_internal_add_versions() {
+  return _impl_.versions_.Add();
+}
+inline ::Version* Versions::add_versions() {
+  ::Version* _add = _internal_add_versions();
+  // @@protoc_insertion_point(field_add:Versions.versions)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Version >&
+Versions::versions() const {
+  // @@protoc_insertion_point(field_list:Versions.versions)
+  return _impl_.versions_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

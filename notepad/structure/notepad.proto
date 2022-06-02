@@ -22,3 +22,19 @@ message Project{
     string projectName = 3;
     repeated Content contents = 4;
 }
+
+message Operation{
+    string operationType = 1;
+    int32 startLine = 2;
+    int32 endLine = 3;
+    repeated Content contents = 4;
+}
+message Version{
+    string versionID = 1;
+    string createdTime = 2;
+    repeated Operation operation = 3;
+}
+message Versions{
+    string projectID = 1;
+    repeated Version versions = 3;
+}
