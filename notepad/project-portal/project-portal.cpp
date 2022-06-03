@@ -56,10 +56,33 @@ public:
         }
         return false;
     }
+    void setOperation(string operationType, int startLine, int endLine, vector<string> lines, bool createNewProject = false)
+    {
+        VersionControl vc(username, this->currProjectName);
+        Operation op;
+        // set operation attributes
+        op.set_operationtype(operationType);
+        op.set_startline(startLine);
+        op.set_endline(endLine);
+
+        // add changed lines
+        for (int i = 0; i < lines.size(); i++)
+        {
+            Content *content = op.add_contents();
+            content->set_line(lines[i]);
+        }
+
+        if (createNewProject)
+        {
+            Versions v;
+            vc.writeVersions(v);
+        }
+        vc.addOperation(op);
+    }
     void createNewFile()
     {
+        vector<string> lines;
         Project project;
-        Operation op;
         string p_id;
         while (1)
         {
@@ -85,19 +108,13 @@ public:
             if (line == "eof")
                 break;
             addLineContent(project.add_contents(), line);
-            addLineContent(op.add_contents(), line);
+            lines.push_back(line);
         }
+
         writeProject(project);
 
-        // set operation attributes
-        op.set_operationtype("add");
-        op.set_startline(0);
-        op.set_endline(project.contents_size() - 1);
+        setOperation("add", 0, project.contents_size() - 1, lines, true);
 
-        VersionControl vc(username, project.projectname());
-        Versions v;
-        vc.writeVersions(v);
-        vc.addOperation(op);
         projects.push_back(project.projectname() + ".txt");
     }
     void listAllProjects()
@@ -112,26 +129,19 @@ public:
     {
         // append a line at the end of file
         string line;
+        vector<string> lines;
         cout << "Enter the line to append to file\n";
         getline(cin >> ws, line);
         addLineContent(project.add_contents(), line);
+        lines.push_back(line);
 
-        Operation op;
-        // set operation attributes
-        op.set_operationtype("add");
-        op.set_startline(project.contents_size());
-        op.set_endline(project.contents_size());
-        addLineContent(op.add_contents(), line);
-
-        // add operation to version control
-        VersionControl vc(username, project.projectname());
-        vc.addOperation(op);
+        setOperation("add", project.contents_size()-1, project.contents_size()-1, lines);
     }
     void update(Project &project)
     {
-        Operation op;
-        cout << "Enter the line numbers(range) to be updated, (i to i) for a single line : ";
         int start, end;
+        vector<string> lines;
+        cout << "Enter the line numbers(range) to be updated, (i to i) for a single line : ";
         cin >> start >> end;
         if (start <= 0 || end > project.contents_size() || start > end)
         {
@@ -144,27 +154,20 @@ public:
         {
             cout << i + 1 << " ~ ";
             Content *content = project.mutable_contents(i);
-            Content *oprContent = op.add_contents();
-            oprContent->set_line(content->line());
+            lines.push_back(content->line());
             string line;
             getline(cin >> ws, line);
             content->set_line(line);
         }
 
-        // set operation attributes
-        op.set_operationtype("update");
-        op.set_startline(start - 1);
-        op.set_endline(end - 1);
-
-        // add operation to version control
-        VersionControl vc(username, project.projectname());
-        vc.addOperation(op);
+        setOperation("update", start, end, lines);
     }
     void remove(Project &project)
     {
-        Operation op;
-        cout << "Enter the line numbers(range) to be removed, (i to i) for a single line : ";
+        vector<string> lines;
         int start, end, num;
+
+        cout << "Enter the line numbers(range) to be removed, (i to i) for a single line : ";
         cin >> start >> end;
         if (start <= 0 || end > project.contents_size() || start > end)
         {
@@ -173,6 +176,7 @@ public:
         }
         start--;
         end--;
+
         // num will have the number of elements to be removed from the start index
         if (start == end)
             num = 1;
@@ -181,23 +185,14 @@ public:
 
         RepeatedPtrField<Content> *rep = project.mutable_contents();
 
-        //set content for operation
+        // set content for operation
         for (int i = start; i <= end; i++)
         {
             const Content content = project.contents(i);
-            Content *oprContent = op.add_contents();
-            oprContent->set_line(content.line());
+            lines.push_back(content.line());
         }
 
-        // set operation attributes
-        op.set_operationtype("remove");
-        op.set_startline(start - 1);
-        op.set_endline(end - 1);
-
-        // add operation to version control
-        VersionControl vc(username, project.projectname());
-        vc.addOperation(op);
-
+        setOperation("remove", start, end, lines);
 
         // delete elements from start to start + num - 1 index
         rep->DeleteSubrange(start, num);
@@ -222,7 +217,7 @@ public:
         {
             // read the current state of the object before performing any operation
             readProject(currProject);
-            cout << "1)Add\n2)Update\n3)Remove\n4)Display\n5)Exit";
+            cout << "1)Append\n2)Update\n3)Remove\n4)Display\n5)Version Menu\n6)Return";
             cin >> choice;
             switch (choice)
             {
@@ -239,14 +234,17 @@ public:
                 this->display(currProject);
                 break;
             case 5:
+            {
+                VersionControl vc(currProject.userid(),currProject.projectname());
+                vc.versionMenu(currProject);
+                break;
+            }
+            case 6:
                 return;
             }
 
             // write the current state of the object into its file
             writeProject(currProject);
         }
-    }
-    void versioning()
-    {
     }
 };

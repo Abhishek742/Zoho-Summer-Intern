@@ -67,15 +67,13 @@ public:
     {
         // get the reference of the current user
         const User &user = users.users(currUser);
-        //create a project portal with the current logged in user.
+        // create a project portal with the current logged in user.
         ProjectPortal projectPortal(user.username());
-
-
         cout << "Projects Portal\n";
         int choice;
         while (1)
         {
-            cout << "\n1)Create New File\n2)List All Projects\n3)Open Project\n4)Versioning\n5)Exit";
+            cout << "\n1)Create New File\n2)List All Projects\n3)Open Project\n4)Exit";
             cin >> choice;
             switch (choice)
             {
@@ -91,9 +89,6 @@ public:
                 projectPortal.openProject();
                 break;
             case 4:
-                projectPortal.versioning();
-                break;
-            case 5:
                 return;
             }
         }
