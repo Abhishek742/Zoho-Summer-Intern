@@ -47,7 +47,7 @@ public:
     {
         content->set_line(line);
     }
-    bool isExistingFile()
+    bool isExistingProject()
     {
         for (int i = 0; i < projects.size(); i++)
         {
@@ -79,20 +79,20 @@ public:
         }
         vc.addOperation(op);
     }
-    void createNewFile()
+    void createNewProject()
     {
         vector<string> lines;
         Project project;
         string p_id;
         while (1)
         {
-            cout << "Enter the file name : ";
+            cout << "Enter the project name : ";
             getline(cin >> ws, this->currProjectName);
-            if (!isExistingFile())
+            if (!isExistingProject())
             {
                 break;
             }
-            cout << "File already Exists!!! Enter another filename!!!\n";
+            cout << "Project already Exists!!!\n";
         }
 
         // set project attributes
@@ -104,7 +104,7 @@ public:
         string line = "";
         while (1)
         {
-            getline(cin >> ws, line);
+            getline(cin, line);
             if (line == "eof")
                 break;
             addLineContent(project.add_contents(), line);
@@ -135,7 +135,7 @@ public:
         addLineContent(project.add_contents(), line);
         lines.push_back(line);
 
-        setOperation("add", project.contents_size()-1, project.contents_size()-1, lines);
+        setOperation("add", project.contents_size() - 1, project.contents_size() - 1, lines);
     }
     void update(Project &project)
     {
@@ -200,7 +200,7 @@ public:
 
     void display(Project &project)
     {
-        cout << "Project contents : \n";
+        system("clear");
         for (int i = 0; i < project.contents_size(); i++)
         {
             const Content &content = project.contents(i);
@@ -209,15 +209,25 @@ public:
     }
     void openProject()
     {
-        cout << "Enter the name of the project : ";
-        getline(cin >> ws, this->currProjectName);
+        while (1)
+        {
+            cout << "Enter the name of the project : ";
+            getline(cin >> ws, this->currProjectName);
+            if(isExistingProject()){
+                break;
+            }
+            cout<<"Invalid Project Name!!\n";
+        }
+
         Project currProject;
         int choice;
         while (1)
         {
+            system("clear");
+            cout << "Project Opened : " << this->currProjectName << "\n\n";
             // read the current state of the object before performing any operation
             readProject(currProject);
-            cout << "1)Append\n2)Update\n3)Remove\n4)Display\n5)Version Menu\n6)Return";
+            cout << "1)Append\n2)Update\n3)Remove\n4)Display\n5)Version Menu\n6)Return\n";
             cin >> choice;
             switch (choice)
             {
@@ -235,16 +245,21 @@ public:
                 break;
             case 5:
             {
-                VersionControl vc(currProject.userid(),currProject.projectname());
+                VersionControl vc(currProject.userid(), currProject.projectname());
                 vc.versionMenu(currProject);
                 break;
             }
             case 6:
                 return;
+            default:
+                break;
             }
-
             // write the current state of the object into its file
             writeProject(currProject);
+
+            cout << "\nEnter any character to continue : ";
+            string ch;
+            getline(cin >> ws, ch);
         }
     }
 };

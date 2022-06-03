@@ -121,6 +121,7 @@ public:
     }
     void displayVersions()
     {
+        system("clear");
         Versions versions;
         readVersions(versions);
 
@@ -174,19 +175,13 @@ public:
                 }
                 else if (opr.operationtype() == "remove")
                 {
-                    cout << "before revert" << endl;
                     revertRemove(currProject, opr);
-                    cout << "revert done";
-                    // flag = true;
-                    // break;
                 }
                 else
                 {
                     continue;
                 }
             }
-            // if(flag)
-            cout << "flag";
             RepeatedPtrField<Version> *rep = versions.mutable_versions();
             rep->DeleteSubrange(versions.versions_size() - 1, 1);
         }
@@ -197,6 +192,7 @@ public:
         int choice;
         while (1)
         {
+            system("clear");
             cout << "Version Menu \n";
             cout << "1)Display Versions\n2)Revert Version\n3)Return\n";
             cin >> choice;
@@ -210,7 +206,12 @@ public:
                 break;
             case 3:
                 return;
+            default:
+                break;
             }
+            cout<<"\nEnter any character to continue : ";
+            string ch;
+            getline(cin>>ws,ch);
         }
     }
 };

@@ -38,6 +38,8 @@ public:
         int choice;
         while (1)
         {
+            system("clear");
+            cout << "Login Portal\n";
             cout << "\n1)Sign In\n2)Sign Up\n3)Exit\n";
             cin >> choice;
             switch (choice)
@@ -59,8 +61,12 @@ public:
                 break;
 
             case 3:
-                return;
+                exit(0);
             }
+
+            string ch;
+            cout<<"\nEnter any key to continue : ";
+            getline(cin>>ws,ch);
         }
     }
     void openProjectsPortal()
@@ -69,16 +75,19 @@ public:
         const User &user = users.users(currUser);
         // create a project portal with the current logged in user.
         ProjectPortal projectPortal(user.username());
-        cout << "Projects Portal\n";
         int choice;
+        string ch;
+
         while (1)
         {
-            cout << "\n1)Create New File\n2)List All Projects\n3)Open Project\n4)Exit";
+            system("clear");
+            cout << "Projects Portal\n";
+            cout << "\n1)Create New File\n2)List All Projects\n3)Open Project\n4)Logout\n";
             cin >> choice;
             switch (choice)
             {
             case 1:
-                projectPortal.createNewFile();
+                projectPortal.createNewProject();
                 break;
 
             case 2:
@@ -90,7 +99,12 @@ public:
                 break;
             case 4:
                 return;
+            default:
+                break;
             }
+
+            cout << "\nEnter any character to continue : ";
+            getline(cin >> ws, ch);
         }
     }
 };
@@ -98,9 +112,14 @@ public:
 int main()
 {
     Notepad notepad;
-    notepad.loginAccount();
-    if (notepad.isLoggedIn())
-        notepad.openProjectsPortal();
-    // VersionControl vs("abhi02");
+    // prompt to login everytime
+    while (1)
+    {
+        //exit condition is set inside loginAccount()
+        notepad.loginAccount();
+        if (notepad.isLoggedIn())
+            notepad.openProjectsPortal();
+    }
+
     return 0;
 }
