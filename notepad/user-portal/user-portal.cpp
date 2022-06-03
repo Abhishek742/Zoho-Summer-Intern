@@ -5,7 +5,7 @@ using namespace std;
 class UserPortal
 {
 public:
-    int isExistingUser(string username,Users users)
+    int isExistingUser(string username, Users users)
     {
         for (int i = 0; i < users.users_size(); i++)
         {
@@ -17,35 +17,8 @@ public:
     }
     bool isEmailInValid(string email)
     {
-        int atIndex = -1, dotIndex = -1;
-        int i = 0;
-        while (i < email.length())
-        {
-            if (email[i] == '@')
-            {
-                atIndex = i;
-            }
-            else if (atIndex != -1 && email[i] == '.')
-            {
-                dotIndex = i;
-            }
-            else
-            {
-                // if @ isnt visited, we can have alphabets and numbers ie)prefix portion of email
-                if (atIndex == -1 && ((email[i] < 'a' || email[i] > 'z') && (email[i] < '0' || email[i] > '9') && email[i] != '.'))
-                    return true;
-
-                // after the prefix, only a-z should be present
-                if (atIndex != -1 && (email[i] < 'a' || email[i] > 'z'))
-                    return true;
-            }
-            i++;
-        }
-        //'@' or '.' is not found or present at the start or end of email
-        if (atIndex == -1 || dotIndex == -1 || atIndex == 0 || dotIndex == atIndex + 1 || dotIndex == email.length() - 1)
-            return true;
-
-        return false;
+        const regex pattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+        return !regex_match(email, pattern);
     }
     void encrypt(string &password)
     {
@@ -78,7 +51,7 @@ public:
         cin >> location;
 
         // username already exists
-        if (isExistingUser(username,users) != -1)
+        if (isExistingUser(username, users) != -1)
         {
             cout << "User Name already exists!!!\n";
             return;
@@ -105,7 +78,7 @@ public:
         cin >> username;
         cout << "Password : ";
         cin >> password;
-        int index = isExistingUser(username,users);
+        int index = isExistingUser(username, users);
         if (index == -1)
         {
             cout << "Invalid User Name!!!";
